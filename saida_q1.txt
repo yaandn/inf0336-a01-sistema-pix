@@ -1,0 +1,33 @@
+=================== QUESTAO 1: CONDICAO DE CORRIDA ===================
+
+Experimento: cada remetente envia K=1000 PIX de R$1 ao recebedor
+Protecao: NENHUMA | 5 execucoes por N
+
+     N     esperado   pior saldo  R$ perdidos      erros
+------------------------------------------------------------
+     1         1000         1000            0       0/5
+     2         2000         1073          927       5/5  <-- INCONSISTENTE
+     4         4000         2155         1845       5/5  <-- INCONSISTENTE
+     8         8000         5321         2679       5/5  <-- INCONSISTENTE
+    16        16000        12123         3877       5/5  <-- INCONSISTENTE
+    32        32000        21384        10616       5/5  <-- INCONSISTENTE
+    64        64000        18515        45485       5/5  <-- INCONSISTENTE
+   128       128000        62186        65814       5/5  <-- INCONSISTENTE
+   256       256000       127256       128744       5/5  <-- INCONSISTENTE
+   512       512000       353516       158484       5/5  <-- INCONSISTENTE
+
+Experimento: cada remetente envia K=1000 PIX de R$1 ao recebedor
+Protecao: MUTEX | 5 execucoes por N
+
+     N     esperado   pior saldo  R$ perdidos      erros
+------------------------------------------------------------
+     1         1000         1000            0       0/5
+     2         2000         2000            0       0/5
+     4         4000         4000            0       0/5
+     8         8000         8000            0       0/5
+    16        16000        16000            0       0/5
+    32        32000        32000            0       0/5
+    64        64000        64000            0       0/5
+   128       128000       128000            0       0/5
+   256       256000       256000            0       0/5
+   512       512000       512000            0       0/5

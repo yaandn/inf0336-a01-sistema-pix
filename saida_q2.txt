@@ -1,0 +1,66 @@
+============ QUESTOES 2 e 3: MUTEX + FCFS + DEBUG POR SINAIS ============
+
+Sistema PIX | pool = 3 threads | 8 requisicoes | PID 31082
+Pressione Ctrl+C para ver a fila (debug) | Ctrl+\ para abortar
+
+[     0 ms] chegou P1  (R$ 100, burst 3000 ms)
+[     0 ms] chegou P2  (R$ 50, burst 2000 ms)
+[     0 ms] T0 inicia  P1  (chegou     0 ms, esperou     0 ms)
+[     0 ms] T2 inicia  P2  (chegou     0 ms, esperou     0 ms)
+[   501 ms] chegou P3  (R$ 70, burst 1000 ms)
+[   501 ms] T1 inicia  P3  (chegou   500 ms, esperou     1 ms)
+[  1000 ms] chegou P4  (R$ 30, burst 4000 ms)
+[  1500 ms] chegou P5  (R$ 20, burst 1500 ms)
+[  1502 ms] T1 termina P3   conta 3 -> conta 0  R$ 70 OK
+[  1502 ms] T1 inicia  P4  (chegou  1000 ms, esperou   502 ms)
+[  2000 ms] chegou P6  (R$ 10, burst 1000 ms)
+[  2000 ms] T2 termina P2   conta 2 -> conta 0  R$ 50 OK
+[  2000 ms] T2 inicia  P5  (chegou  1500 ms, esperou   500 ms)
+
+================= DEBUG (Ctrl+C) t = 2199 ms =================
+Thread pool (3 threads):
+  T0: RUNNING P1   executou  2199 ms de  3000 ms
+  T1: RUNNING P4   executou   697 ms de  4000 ms
+  T2: RUNNING P5   executou   199 ms de  1500 ms
+Fila FCFS (READY) - 1 requisicao(oes) aguardando:
+  HEAD -> [P6 R$10 espera 199ms] -> TAIL
+Saldos:  c0=R$1120  c1=R$1000  c2=R$950  c3=R$930  c4=R$1000
+==============================================================
+
+[  2502 ms] chegou P7  (R$ 40, burst 2000 ms)
+[  3000 ms] chegou P8  (R$ 25, burst 500 ms)
+[  3000 ms] T0 termina P1   conta 1 -> conta 0  R$ 100 OK
+[  3000 ms] T0 inicia  P6  (chegou  2000 ms, esperou  1000 ms)
+[  3501 ms] T2 termina P5   conta 1 -> conta 2  R$ 20 OK
+[  3501 ms] T2 inicia  P7  (chegou  2500 ms, esperou  1001 ms)
+[  4000 ms] T0 termina P6   conta 2 -> conta 3  R$ 10 OK
+[  4000 ms] T0 inicia  P8  (chegou  3000 ms, esperou  1000 ms)
+
+================= DEBUG (Ctrl+C) t = 4202 ms =================
+Thread pool (3 threads):
+  T0: RUNNING P8   executou   202 ms de   500 ms
+  T1: RUNNING P4   executou  2700 ms de  4000 ms
+  T2: RUNNING P7   executou   701 ms de  2000 ms
+Fila FCFS (READY) - 0 requisicao(oes) aguardando:
+  HEAD -> (vazia) -> TAIL
+Saldos:  c0=R$1220  c1=R$880  c2=R$960  c3=R$940  c4=R$1000
+==============================================================
+
+[  4501 ms] T0 termina P8   conta 4 -> conta 1  R$ 25 OK
+[  5501 ms] T2 termina P7   conta 3 -> conta 4  R$ 40 OK
+[  5502 ms] T1 termina P4   conta 4 -> conta 0  R$ 30 OK
+
+====================== RELATORIO FCFS ======================
+ PIX  chegada    burst   inicio      fim   espera  thread  turnar.
+  P1         0     3000        0     3000        0      T0     3000
+  P2         0     2000        0     2000        0      T2     2000
+  P3       500     1000      501     1502        1      T1     1002
+  P4      1000     4000     1502     5502      502      T1     4502
+  P5      1500     1500     2000     3501      500      T2     2001
+  P6      2000     1000     3000     4000     1000      T0     2000
+  P7      2500     2000     3501     5501     1001      T2     3001
+  P8      3000      500     4000     4501     1000      T0     1501
+Tempo medio de espera:     500 ms
+Turnaround medio:          2376 ms
+Saldos finais:  c0=R$1250  c1=R$905  c2=R$960  c3=R$900  c4=R$985
+Dinheiro no sistema: inicial R$ 5000 | final R$ 5000 -> CONSISTENTE
