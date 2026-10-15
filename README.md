@@ -128,10 +128,4 @@ Saldos:  c0=R$1120  c1=R$1000  c2=R$950  c3=R$930  c4=R$1000
 
 ---
 
-## Roteiro sugerido para o vídeo (até 5 min)
 
-1. **(0:00–0:40)** Apresentar o modelo N:1 e apontar no código o recurso e a seção crítica (`q1_pix()` em `sistema_pix.c`).
-2. **(0:40–1:50)** Rodar `./sistema_pix q1`: mostrar N=1 correto, inconsistência a partir de N=2 e o mutex zerando as perdas.
-3. **(1:50–3:20)** Mostrar a estrutura da fila, o `mutex_bd`, o semáforo e o laço do worker; rodar `./sistema_pix q2`.
-4. **(3:20–4:30)** Apertar Ctrl+C duas vezes durante a execução e explicar a saída do debug; encerrar com o relatório FCFS (saldo consistente).
-5. **(4:30–5:00)** Conclusão: o que muda com e sem sincronização.
